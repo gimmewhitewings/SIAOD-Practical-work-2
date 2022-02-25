@@ -1,8 +1,6 @@
 ﻿#include <iostream>
 #include <locale>
 
-const int rowsNumber = 1000;
-const int columnsNumber = 1000;
 
 using namespace std;
 
@@ -15,7 +13,7 @@ int main()
 	setlocale(LC_ALL, "Russian");
 	string stop = "\n----------------------------------------------------------------------------\n";
 	int problem, flag = 1;
-	char** field;
+	char** field = NULL;
 	int m = 0, n = 0;
 	while (flag)
 	{
@@ -25,7 +23,8 @@ int main()
 			"Меню\n"
 			"1) Заполнить поле.\n"
 			"2) Вывести поле.\n"
-			"3) Узнать, не победили ли крестики.\n";
+			"3) Узнать, не победили ли крестики.\n"
+			"4) Завершить проверку.\n";
 		cout << "Ваш выбор: ";
 		cin >> problem; //Ввод задания
 		switch (problem) {
@@ -43,9 +42,9 @@ int main()
 				cin >> n;
 			}
 			field = new char* [m];
-			for (int i = 0; i < rowsNumber; i++)
+			for (int i = 0; i < m; i++)
 			{
-				field[rowsNumber] = new char[columnsNumber];
+				field[i] = new char[n];
 			}
 			createField(field, m, n);
 			system("pause");
@@ -78,7 +77,6 @@ int main()
 					cout << "Крестики проиграли :(" << endl;
 				}
 			}
-			cout << crossWins(field, m, n) << endl;
 			system("pause");
 			break;
 		case 4:
@@ -118,29 +116,45 @@ void printField(char** field, int rows, int columns)
 bool crossWins(char** field, int rows, int columns)
 {
 	int mainDiagonal = 0, horizontal = 0, vertical = 0, backDiagonal = 0;
-	for (int i = 0; i < rows; i++)
+	for (int row = 0; row < rows; row++)
 	{
-		for (int j = 0; j < columns; j++)
+		for (int col = 0; col < columns; col++)
 		{
-			if (field[i][j] == 'x')
+			if (field[row][col] == 'x')
 			{
-				for (int p = 1; p < 6; p++)
+				for (int p = 1; p < 5; p++)
 				{
-					if (field[i + p][j] == 'x')
-					{
-						horizontal++;
-					}
-					else if (field[i][j + p] == 'x')
+					if (row + p < rows && field[row + p][col] == 'x')
 					{
 						vertical++;
 					}
-					else if (field[i + p][j + p] == 'x')
+					else
+					{
+						vertical = 0;
+					}
+					if (col + p < columns && field[row][col + p] == 'x')
+					{
+						horizontal++;
+					}
+					else
+					{
+						horizontal = 0;
+					}
+					if (row + p < rows && col + p < columns && field[row + p][col + p] == 'x')
 					{
 						mainDiagonal++;
 					}
-					else if (field[i + p][j - p] == 'x')
+					else
+					{
+						mainDiagonal = 0;
+					}
+					if (row + p < rows && col - p >= 0 && field[row + p][col - p] == 'x')
 					{
 						backDiagonal++;
+					}
+					else
+					{
+						backDiagonal = 0;
 					}
 				}
 				if (horizontal == 4 || vertical == 4 || mainDiagonal == 4 || backDiagonal == 4)
