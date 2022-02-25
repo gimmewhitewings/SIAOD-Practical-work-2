@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{595b9d38-89f5-4b34-91f4-123e05daadff}</ProjectGuid>
-    <RootNamespace>Статическиймассив</RootNamespace>
+    <ProjectGuid>{6ba9c158-6db8-438b-8e45-64fd591dcfba}</ProjectGuid>
+    <RootNamespace>Динамическиймассив</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Статический массив.cpp" />
+    <ClCompile Include="Динамический массив.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
