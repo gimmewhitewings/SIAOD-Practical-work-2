@@ -5,6 +5,7 @@ using namespace std;
 
 void create2Dvector(vector<vector<double>>& vec, int rows, int cols);
 void print2Dvector(vector<vector<double>> vec, int rows, int cols);
+void gauss(vector<vector<double>> vec, int rows, int cols);
 
 int main()
 {
@@ -29,7 +30,7 @@ int main()
 		case 1:
 			cout << "Введите количество уравнений m: ";
 			cin >> m;
-			cout << "Введите количество переменных n: ";
+			cout << "Введите количество коэффициентов n в дополненной матрице: ";
 			cin >> n;
 			while (n <= 0 || m <= 0)
 			{
@@ -54,6 +55,17 @@ int main()
 			}
 			system("pause");
 			break;
+		case 3:
+			gauss(vec, m, n);
+			system("pause");
+			break;
+		case 4:
+			flag = 0;
+			cout << "Спасибо, до свидания!" << endl;
+			break;
+		default:
+			cout << "Извините, я не совсем вас понимаю. Попробуйте ещё раз." << endl;
+			system("pause");
 		}
 	}
 }
@@ -79,11 +91,62 @@ void print2Dvector(vector<vector<double>> vec, int rows, int cols)
 		for (int col = 0; col < cols; col++)
 		{
 			cout << vec[row][col] << " ";
-			if (col == cols - 1)
+			if (col == cols - 2)
 			{
 				cout << "| ";
 			}
 		}
 		cout << '\n';
+	}
+}
+
+void gauss(vector<vector<double>> vec, int rows, int cols)
+{
+	bool flag = 0;
+	double tmp;
+	vector <double> solutions;
+	solutions.resize(cols - 1);
+
+	for (int i = 0; i < rows; i++)
+	{
+		tmp = vec[i][i];
+		for (int j = rows; j >= i; j--)
+		{
+			vec[i][j] /= tmp;
+		}
+		for (int j = i + 1; j < rows; j++)
+		{
+			tmp = vec[j][i];
+			for (int k = rows; k >= i; k--)
+			{
+				vec[j][k] -= tmp * vec[i][k];
+			}
+		}
+	}
+
+	solutions[rows - 1] = vec[rows - 1][rows];
+	for (int i = rows - 2; i >= 0; i--)
+	{
+		solutions[i] = vec[i][rows];
+		for (int j = i + 1; j < rows; j++)
+		{
+			solutions[i] -= vec[i][j] * solutions[j];
+		}
+	}
+	for (int i = 0; i < rows; i++)
+	{
+		if (solutions[i] != solutions[i])
+		{
+			flag = 1;
+			cout << "Система несовместна или имеет бесконечное количество решений." << endl;
+			break;
+		}
+	}
+
+	if (!flag)
+	{
+		for (int i = 0; i < rows; i++)
+			cout << solutions[i] << " ";
+		cout << endl;
 	}
 }
