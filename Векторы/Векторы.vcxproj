@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6ba9c158-6db8-438b-8e45-64fd591dcfba}</ProjectGuid>
-    <RootNamespace>Динамическиймассив</RootNamespace>
+    <ProjectGuid>{87a1ba6d-5672-4756-976e-86aa6dc07f53}</ProjectGuid>
+    <RootNamespace>Векторы</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="dynamic.cpp" />
+    <ClCompile Include="vectors.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

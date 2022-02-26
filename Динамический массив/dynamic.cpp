@@ -1,47 +1,50 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <locale>
 
-const int rowsNumber = 1000;
-const int columnsNumber = 1000;
 
 using namespace std;
 
-void createField(char(*field)[columnsNumber], int rows, int columns);
-void printField(char(*field)[columnsNumber], int rows, int columns);
-bool crossWins(char(*field)[columnsNumber], int rows, int columns);
+void createField(char** field, int rows, int columns);
+void printField(char** field, int rows, int columns);
+bool crossWins(char** field, int rows, int columns);
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 	string stop = "\n----------------------------------------------------------------------------\n";
 	int problem, flag = 1;
-	char field[rowsNumber][columnsNumber] = { {"_"}};
+	char** field = NULL;
 	int m = 0, n = 0;
 	while (flag)
 	{
-		system("cls"); //Команда, очищающая консоль
-		cout << "Практическая работа №2 ИКБО-03-21 Поведенок С.С. Варинат 22" << "\n\n" //Вывод меню
-			"Задание 2\n"
-			"Меню\n"
-			"1) Заполнить поле.\n"
-			"2) Вывести поле.\n"
-			"3) Узнать, не победили ли крестики.\n"
-			"4) Завершить проверку.\n";
-		cout << "Ваш выбор: ";
-		cin >> problem; //Ввод задания
+		system("cls"); //РљРѕРјР°РЅРґР°, РѕС‡РёС‰Р°СЋС‰Р°СЏ РєРѕРЅСЃРѕР»СЊ
+		cout << "РџСЂР°РєС‚РёС‡РµСЃРєР°СЏ СЂР°Р±РѕС‚Р° в„–2 РРљР‘Рћ-03-21 РџРѕРІРµРґРµРЅРѕРє РЎ.РЎ. Р’Р°СЂРёРЅР°С‚ 22" << "\n\n" //Р’С‹РІРѕРґ РјРµРЅСЋ
+			"Р—Р°РґР°РЅРёРµ 2\n"
+			"РњРµРЅСЋ\n"
+			"1) Р—Р°РїРѕР»РЅРёС‚СЊ РїРѕР»Рµ.\n"
+			"2) Р’С‹РІРµСЃС‚Рё РїРѕР»Рµ.\n"
+			"3) РЈР·РЅР°С‚СЊ, РЅРµ РїРѕР±РµРґРёР»Рё Р»Рё РєСЂРµСЃС‚РёРєРё.\n"
+			"4) Р—Р°РІРµСЂС€РёС‚СЊ РїСЂРѕРІРµСЂРєСѓ.\n";
+		cout << "Р’Р°С€ РІС‹Р±РѕСЂ: ";
+		cin >> problem; //Р’РІРѕРґ Р·Р°РґР°РЅРёСЏ
 		switch (problem) {
 		case 1:
-			cout << "Введите количество строк m: ";
+			cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂРѕРє m: ";
 			cin >> m;
-			cout << "Введите количество столбцов n: ";
+			cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚РѕР»Р±С†РѕРІ n: ";
 			cin >> n;
 			while (n <= 0 || n > 1000 || m <= 0 || m > 1000)
 			{
-				cout << "Значения m и n не должны превышать 1000 и быть меньше 1. Попробуйте еще раз." << endl;
-				cout << "Введите количество строк m: ";
+				cout << "Р—РЅР°С‡РµРЅРёСЏ m Рё n РЅРµ РґРѕР»Р¶РЅС‹ РїСЂРµРІС‹С€Р°С‚СЊ 1000 Рё Р±С‹С‚СЊ РјРµРЅСЊС€Рµ 1. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·." << endl;
+				cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂРѕРє m: ";
 				cin >> m;
-				cout << "Введите количество столбцов n: ";
+				cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚РѕР»Р±С†РѕРІ n: ";
 				cin >> n;
+			}
+			field = new char* [m];
+			for (int i = 0; i < m; i++)
+			{
+				field[i] = new char[n];
 			}
 			createField(field, m, n);
 			system("pause");
@@ -49,11 +52,11 @@ int main()
 		case 2:
 			if (m == 0 || n == 0)
 			{
-				cout << "Поле пусто." << endl;
+				cout << "РџРѕР»Рµ РїСѓСЃС‚Рѕ." << endl;
 			}
 			else
 			{
-				cout << "На данный момент поле имеет следующий вид: " << endl;
+				cout << "РќР° РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚ РїРѕР»Рµ РёРјРµРµС‚ СЃР»РµРґСѓСЋС‰РёР№ РІРёРґ: " << endl;
 				printField(field, m, n);
 			}
 			system("pause");
@@ -61,33 +64,33 @@ int main()
 		case 3:
 			if (m == 0 || n == 0)
 			{
-				cout << "Поле пусто." << endl;
+				cout << "РџРѕР»Рµ РїСѓСЃС‚Рѕ." << endl;
 			}
 			else
 			{
 				if (crossWins(field, m, n))
 				{
-					cout << "Крестики победили!" << endl;
+					cout << "РљСЂРµСЃС‚РёРєРё РїРѕР±РµРґРёР»Рё!" << endl;
 				}
 				else
 				{
-					cout << "Крестики проиграли :(" << endl;
+					cout << "РљСЂРµСЃС‚РёРєРё РїСЂРѕРёРіСЂР°Р»Рё :(" << endl;
 				}
 			}
 			system("pause");
 			break;
 		case 4:
-			cout << "Спасибо, до свидания!";
+			cout << "РЎРїР°СЃРёР±Рѕ, РґРѕ СЃРІРёРґР°РЅРёСЏ!" << endl;
 			flag = false;
 			break;
 		default:
-			cout << "Извините, я не совсем вас понимаю.";
+			cout << "РР·РІРёРЅРёС‚Рµ, СЏ РЅРµ СЃРѕРІСЃРµРј РІР°СЃ РїРѕРЅРёРјР°СЋ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·." << endl;
 			system("pause");
 		}
 	}
 }
 
-void createField(char(*field)[columnsNumber], int rows, int columns)
+void createField(char** field, int rows, int columns)
 {
 	for (int i = 0; i < rows; i++)
 	{
@@ -98,7 +101,7 @@ void createField(char(*field)[columnsNumber], int rows, int columns)
 	}
 }
 
-void printField(char(*field)[columnsNumber], int rows, int columns)
+void printField(char** field, int rows, int columns)
 {
 	for (int i = 0; i < rows; i++)
 	{
@@ -110,7 +113,7 @@ void printField(char(*field)[columnsNumber], int rows, int columns)
 	}
 }
 
-bool crossWins(char(*field)[columnsNumber], int rows, int columns)
+bool crossWins(char** field, int rows, int columns)
 {
 	int mainDiagonal = 0, horizontal = 0, vertical = 0, backDiagonal = 0;
 	for (int row = 0; row < rows; row++)

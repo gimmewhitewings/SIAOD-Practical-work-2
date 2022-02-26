@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Статический массив.cpp">
+    <ClCompile Include="static.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
