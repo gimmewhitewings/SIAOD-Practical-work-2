@@ -76,7 +76,6 @@ void create2Dvector(vector<vector<double>>& vec, int rows, int cols)
 	for (int row = 0; row < rows; row++)
 	{
 		vec[row].resize(cols);
-		cout << "Введите " << cols << " коэффициентов для заполнения строки " << row + 1 << endl;
 		for (int col = 0; col < cols; col++)
 		{
 			cin >> vec[row][col];
@@ -106,47 +105,81 @@ void gauss(vector<vector<double>> vec, int rows, int cols)
 	double tmp;
 	vector <double> solutions;
 	solutions.resize(cols - 1);
-
-	for (int i = 0; i < rows; i++)
+	if (rows < cols - 1)
 	{
-		tmp = vec[i][i];
-		for (int j = rows; j >= i; j--)
-		{
-			vec[i][j] /= tmp;
-		}
-		for (int j = i + 1; j < rows; j++)
-		{
-			tmp = vec[j][i];
-			for (int k = rows; k >= i; k--)
-			{
-				vec[j][k] -= tmp * vec[i][k];
-			}
-		}
+		cout << "Система несовместна или имеет бесконечное количество решений." << endl;
 	}
-
-	solutions[rows - 1] = vec[rows - 1][rows];
-	for (int i = rows - 2; i >= 0; i--)
-	{
-		solutions[i] = vec[i][rows];
-		for (int j = i + 1; j < rows; j++)
-		{
-			solutions[i] -= vec[i][j] * solutions[j];
-		}
-	}
-	for (int i = 0; i < rows; i++)
-	{
-		if (solutions[i] != solutions[i])
-		{
-			flag = 1;
-			cout << "Система несовместна или имеет бесконечное количество решений." << endl;
-			break;
-		}
-	}
-
-	if (!flag)
+	else
 	{
 		for (int i = 0; i < rows; i++)
-			cout << solutions[i] << " ";
-		cout << endl;
+		{
+			tmp = vec[i][i];
+			for (int j = rows; j >= i; j--)
+			{
+				vec[i][j] /= tmp;
+			}
+			for (int j = i + 1; j < rows; j++)
+			{
+				tmp = vec[j][i];
+				for (int k = rows; k >= i; k--)
+				{
+					vec[j][k] -= tmp * vec[i][k];
+				}
+			}
+		}
+
+		solutions[rows - 1] = vec[rows - 1][rows];
+		for (int i = rows - 2; i >= 0; i--)
+		{
+			solutions[i] = vec[i][rows];
+			for (int j = i + 1; j < rows; j++)
+			{
+				solutions[i] -= vec[i][j] * solutions[j];
+			}
+		}
+
+		if (!flag)
+		{
+			for (int i = 0; i < rows; i++)
+			{
+				cout << solutions[i] << " ";
+			}
+			cout << endl;
+		}
+		for (int i = 0; i < rows; i++)
+		{
+			tmp = vec[i][i];
+			for (int j = rows; j >= i; j--)
+			{
+				vec[i][j] /= tmp;
+			}
+			for (int j = i + 1; j < rows; j++)
+			{
+				tmp = vec[j][i];
+				for (int k = rows; k >= i; k--)
+				{
+					vec[j][k] -= tmp * vec[i][k];
+				}
+			}
+		}
+
+		solutions[rows - 1] = vec[rows - 1][rows];
+		for (int i = rows - 2; i >= 0; i--)
+		{
+			solutions[i] = vec[i][rows];
+			for (int j = i + 1; j < rows; j++)
+			{
+				solutions[i] -= vec[i][j] * solutions[j];
+			}
+		}
+
+		if (!flag)
+		{
+			for (int i = 0; i < rows; i++)
+			{
+				cout << solutions[i] << " ";
+			}
+			cout << endl;
+		}
 	}
 }
