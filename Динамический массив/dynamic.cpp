@@ -1,7 +1,6 @@
 ﻿#include <iostream>
 #include <locale>
 
-
 using namespace std;
 
 void createField(char** field, int rows, int columns);
