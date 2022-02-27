@@ -56,7 +56,14 @@ int main()
 			system("pause");
 			break;
 		case 3:
-			gauss(vec, m, n);
+			if (m == 0 || n == 0)
+			{
+				cout << "Система пока не введена." << endl;
+			}
+			else
+			{
+				gauss(vec, m, n);
+			}
 			system("pause");
 			break;
 		case 4:
@@ -140,41 +147,7 @@ void gauss(vector<vector<double>> vec, int rows, int cols)
 
 		if (!flag)
 		{
-			for (int i = 0; i < rows; i++)
-			{
-				cout << solutions[i] << " ";
-			}
-			cout << endl;
-		}
-		for (int i = 0; i < rows; i++)
-		{
-			tmp = vec[i][i];
-			for (int j = rows; j >= i; j--)
-			{
-				vec[i][j] /= tmp;
-			}
-			for (int j = i + 1; j < rows; j++)
-			{
-				tmp = vec[j][i];
-				for (int k = rows; k >= i; k--)
-				{
-					vec[j][k] -= tmp * vec[i][k];
-				}
-			}
-		}
-
-		solutions[rows - 1] = vec[rows - 1][rows];
-		for (int i = rows - 2; i >= 0; i--)
-		{
-			solutions[i] = vec[i][rows];
-			for (int j = i + 1; j < rows; j++)
-			{
-				solutions[i] -= vec[i][j] * solutions[j];
-			}
-		}
-
-		if (!flag)
-		{
+			cout << "Вывод решений: " << endl;
 			for (int i = 0; i < rows; i++)
 			{
 				cout << solutions[i] << " ";
